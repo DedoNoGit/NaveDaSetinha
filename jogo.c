@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
-#include "nave assets/nave.h"
+#include "nave.h"
 
 int getch(void)
 {
