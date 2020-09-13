@@ -1,24 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <termios.h>
-#include <unistd.h>
+#ifdef _WIN32
+#include <conio.h>
+#define CLEARSCREEN() system("cls")
+#else
+#include "crossio.h"
+#define CLEARSCREEN() system("clear")
+#endif
 #include "nave.h"
-
-int getch(void)
-{
-    struct termios oldattr, newattr;
-    int ch;
-    tcgetattr( STDIN_FILENO, &oldattr );
-    newattr = oldattr;
-    newattr.c_lflag &= ~( ICANON | ECHO );
-    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
-    ch = getchar();
-    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
-    return ch;
-}
-
-
-
 
 char jogo[25][50];
 
@@ -34,7 +23,7 @@ int main()
     char keypressed = 'x';
 
     while(keypressed != 'e'){
-        system("clear");
+        CLEARSCREEN();
 
         if(keypressed == 'w') jogador.posicao.coordX -= 2;
         else if(keypressed == 's') jogador.posicao.coordX += 2;
