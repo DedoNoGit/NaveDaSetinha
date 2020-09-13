@@ -1,9 +1,11 @@
+//CROSS PLATAFORM INPUT OUTPUT HEADER STEALED BY MENOR USP COPYRIGHTED TRADEMARKED 2020 
+
 #include <termios.h>
 #include <unistd.h>
 
 
 
-int getch(void)
+int getch()
 {
     struct termios oldattr, newattr;
     int ch;
@@ -15,5 +17,3 @@ int getch(void)
     tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
     return ch;
 }
-
-short BoolLinux ;
