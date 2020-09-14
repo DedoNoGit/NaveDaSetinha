@@ -1,4 +1,4 @@
-struct Nave
+typedef struct Nave
 {//fuck u
     struct posicaoNave
     {
@@ -7,4 +7,4 @@ struct Nave
     }posicao;
     char spriteNave;
     int hpNave;
-};
+}Nave;
