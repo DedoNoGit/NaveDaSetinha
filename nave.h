@@ -1,5 +1,7 @@
-struct Nave{
-    struct posicaoNave{
+struct Nave
+{//fuck u
+    struct posicaoNave
+    {
         int coordX;
         int coordY;
     }posicao;
