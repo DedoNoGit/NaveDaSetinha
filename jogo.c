@@ -115,7 +115,7 @@ void EnemyLogic()
 void Move(int x, int y, Nave *entity) 
 {
     //Check if the next movement will land the entity out of bounds ou inside a wall
-    if((x > ScreenWidgth - 1 || x < 1) || (y > ScreenHeight - 1 || y < 1))
+    if((x > ScreenWidgth || x < 0) || (y > ScreenHeight - 2 || y < 1))
     {
         return;
     }
