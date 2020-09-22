@@ -76,6 +76,8 @@ void Update()
     char keypressed = GetKey();
     if(keypressed == 'w') Translate(0, -2, &jogador);//jogador->posicao.coordX -= 2;
     else if(keypressed == 's') Translate(0, 2, &jogador);//jogador->posicao.coordX += 2;
+    else if(keypressed == 'a') Translate(-2, 0, &jogador);//jogador->posicao.coordY -= 2;
+    else if(keypressed == 'd') Translate(2, 0, &jogador);//jogador->posicao.coordY += 2;
     else if(keypressed == 'e') ClosingState = 1;
     //
 }
