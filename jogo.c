@@ -12,12 +12,9 @@
 #endif
 #include "nave.h"
 #define ScreenHeight 25
-#define ScreenWidgth 50
+#define ScreenWidth 50
 
-//Inicialização Global
-Nave *jogo[ScreenHeight + 1][ScreenWidgth]; // a altura tem um endereço a mais pra guardar algumas definições
-struct Nave jogador;
-//
+
 
 //prototypes
 char GetKey(); //Get the latest pressed key without halting the program
@@ -29,8 +26,33 @@ void Translate(int x, int y, Nave *entity); //Translates Entity in relation to i
 // Para mover entidades pela matrix do jogo use somente as funções acima, se elas não suportarem o que você planeja fazer, modifique-as de acordo
 //
 
+//Construtor da nave
+Nave *initializeNave(int x, int y, char sprite, int hp)
+{
+    Nave *initNave = malloc(sizeof(Nave));
+    
+    initNave->posicao.coordX = x;
+    initNave->posicao.coordY = y;
+
+    initNave->spriteNave = sprite;
+
+    initNave->hpNave = hp;
+
+    initNave->Translate = Translate;
+
+
+    return initNave;
+}
+
+
+
 //temp 
 short ClosingState = 0; //caso for 1 o jogo fechara no proximo loop
+//
+
+//Inicialização Global
+Nave *jogo[ScreenHeight + 1][ScreenWidth]; // a altura tem um endereço a mais pra guardar algumas definições
+Nave *jogador;
 //
 
 int main()
@@ -62,11 +84,9 @@ void Start()
             jogo[i][j] = (i==0 || i==24) ? (jogo[ScreenHeight][1]) : (jogo[ScreenHeight][0]);
         }
     }
-    //Inicializa o jogador
-    jogador.posicao.coordX=0;
-    jogador.posicao.coordY=1;
-    jogador.spriteNave = '>';
-    jogo[1][0] = &jogador;
+    //Inicializa o jogo
+    jogador = initializeNave(0, 1, '>', 10);
+    jogo[1][0] = jogador;
     //
 }
 
@@ -74,10 +94,10 @@ void Update()
 {
     //Movimentação do jogador
     char keypressed = GetKey();
-    if(keypressed == 'w') Translate(0, -2, &jogador);//jogador->posicao.coordX -= 2;
-    else if(keypressed == 's') Translate(0, 2, &jogador);//jogador->posicao.coordX += 2;
-    else if(keypressed == 'a') Translate(-2, 0, &jogador);//jogador->posicao.coordY -= 2;
-    else if(keypressed == 'd') Translate(2, 0, &jogador);//jogador->posicao.coordY += 2;
+    if(keypressed == 'w') jogador->Translate(0, -2, jogador);//jogador->posicao.coordX -= 2;
+    else if(keypressed == 's') jogador->Translate(0, 2, jogador);//jogador->posicao.coordX += 2;
+    else if(keypressed == 'a') jogador->Translate(-2, 0, jogador);//jogador->posicao.coordY -= 2;
+    else if(keypressed == 'd') jogador->Translate(2, 0, jogador);//jogador->posicao.coordY += 2;
     else if(keypressed == 'e') ClosingState = 1;
     //
 }
@@ -117,7 +137,7 @@ void EnemyLogic()
 void Move(int x, int y, Nave *entity) 
 {
     //Check if the next movement will land the entity out of bounds ou inside a wall
-    if((x > ScreenWidgth || x < 0) || (y > ScreenHeight - 2 || y < 1))
+    if((x > ScreenWidth || x < 0) || (y > ScreenHeight - 2 || y < 1))
     {
         return;
     }
@@ -133,7 +153,7 @@ void Move(int x, int y, Nave *entity)
     //
 
     //change position in matrix
-    jogo[_y][_x] = jogo[25][0];
+    jogo[_y][_x] = jogo[ScreenHeight][0];
     jogo[y][x] = entity;
     //
 }
